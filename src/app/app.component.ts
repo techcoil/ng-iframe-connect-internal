@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationStart, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-
+import { environment } from '@environment';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -12,6 +12,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   constructor(private router: Router) {}
 
   ngAfterViewInit(): void {
+    console.log({ environment });
     window.addEventListener('message', (e) => this.onMessage(e));
     this.router.events.subscribe((e) => {
       if (e instanceof NavigationStart) {
@@ -20,7 +21,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
             type: 'route-changed',
             route: e.url,
           },
-          '*'
+          environment.parentOrigin
         );
       }
     });
@@ -46,7 +47,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         type: 'resize',
         height: document.documentElement.offsetHeight,
       },
-      '*'
+      environment.parentOrigin
     );
   }
 
