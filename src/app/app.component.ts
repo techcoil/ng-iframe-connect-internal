@@ -33,7 +33,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       this.resize();
     }
     if (e.data.type === 'route-changed') {
-      this.router.navigate([e.data.route]);
+      if (this.router.url !== e.data.route) {
+        this.router.navigate([e.data.route]);
+      }
     }
   }
 
